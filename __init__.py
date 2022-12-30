@@ -1,9 +1,8 @@
-from .session import web
+from .session import webinit
 from .api import iMISAPI
 from . import helpers
 from .settings import init
-api = None
 
-def setup(dictobj):
+def openAPI(dictobj):
     init(dictobj)
-    api = iMISAPI(web)
+    return iMISAPI(webinit())

@@ -5,7 +5,7 @@ class APIException(Exception):
     def __init__(self, req, *args, **kwargs):
         self.req = req
         super(APIException, self).__init__(*args, **kwargs)
-    
+
     def __str__(self):
         return f"{self.req.status_code} - {self.req.url} \n{self.req.text[:500]}"
 
@@ -36,7 +36,7 @@ class iMISAPI:
         if params: qparams = qparams + params
         for x in self.apiIterator("query", qparams):
             yield x
-    
+
     def getContact(self, id):
         r = self.session.get(f"Party/{id}")
         r.raise_for_status()

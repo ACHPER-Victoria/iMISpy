@@ -4,7 +4,7 @@ import requests
 from .settings import SETTINGS
 
 AUTH_HEADER = { 'content-type': "application/x-www-form-urlencoded", "X-AUTH-ATTEMPT" : "Y"}
-AUTH_DATA = { "Username" : SETTINGS["iMIS_User"], "Password": SETTINGS["iMIS_Password"], "Grant_type":"password" }
+AUTH_DATA = { "Username" : "", "Password": "", "Grant_type": "password" }
 
 from requests.auth import AuthBase
 
@@ -13,6 +13,8 @@ class iMISAuth(AuthBase):
     access_token = None
     session = None
     def __init__(self, session):
+        AUTH_DATA["Username"] = SETTINGS["iMIS_User"]
+        AUTH_DATA["Password"] = SETTINGS["iMIS_Password"]
         self.session = session
 
     def token(self, regen=False):

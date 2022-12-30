@@ -38,9 +38,11 @@ class LiveServerSession(Session):
         url = urljoin(self.prefix_url, url)
         return super(LiveServerSession, self).request(method, url, *args, **kwargs)
 
-web = LiveServerSession(prefix_url=SETTINGS["API_URL"])
-adapter = TimeoutHTTPAdapter(timeout=10, max_retries=retry_strategy)
-web.mount("https://", adapter)
-web.mount("http://", adapter)
-web.auth = iMISAuth(web)
-web.headers.update({'content-type': "application/json"})
+def webinit():
+    web = LiveServerSession(prefix_url=SETTINGS["API_URL"])
+    adapter = TimeoutHTTPAdapter(timeout=10, max_retries=retry_strategy)
+    web.mount("https://", adapter)
+    web.mount("http://", adapter)
+    web.auth = iMISAuth(web)
+    web.headers.update({'content-type': "application/json"})
+    return web
