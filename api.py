@@ -13,6 +13,21 @@ class iMISAPI:
     def __init__(self, session):
         self.session = session
 
+    def get(self, endpoint, id):
+        r = self.session.get(f"{endpoint}/{id}")
+        r.raise_for_status()
+        return r.json()
+
+    def put(self, endpoint, id, obj):
+        r = self.session.put(f"{endpoint}/{id}", json=obj)
+        r.raise_for_status()
+        return r.json()
+
+    def post(self, endpoint, obj, id=""):
+        r = self.session.post(f"{endpoint}/{id}", json=obj)
+        r.raise_for_status()
+        return r.json()
+
     def apiIterator(self, url, p):
         # BE CAREFUL WHEN ITERATING. Don't modify objects that could change the iteration results/ordering.
         p = list(p)
