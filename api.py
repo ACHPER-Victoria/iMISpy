@@ -28,6 +28,11 @@ class iMISAPI:
         r.raise_for_status()
         return r.json()
 
+    def delete(self, endpoint, id=""):
+        r = self.session.delete(f"{endpoint}/{id}")
+        r.raise_for_status()
+        return r
+
     def apiIterator(self, url, p):
         # BE CAREFUL WHEN ITERATING. Don't modify objects that could change the iteration results/ordering.
         p = list(p)
@@ -62,3 +67,13 @@ class iMISAPI:
         r = self.session.put(f"Party/{id}", json=obj)
         r.raise_for_status()
         return r.json()
+
+    def allianceList(self, alliancename):
+        return list(self.apiIterator("/api/ACH_MarketingGroups", params={'GroupName': alliancename}))
+
+    def removeFromAlliance(self, id, alliancename):
+        for entry in self.apiIterator("/api/ACH_MarketingGroups", params={'GroupName': alliancename}):
+            if entry["GroupName"] == alliancename:
+                print(f"Removing {id} from {alliancename}")
+                print(self.delete("/api/ACH_MarketingGroups", "~%s".format("|".join(entry["Identity"]["IdentityElements"]["$values"]))))
+                exit()
