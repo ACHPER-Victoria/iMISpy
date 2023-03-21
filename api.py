@@ -77,7 +77,8 @@ class iMISAPI:
 
     def removeFromAlliance(self, id, alliancename):
         for entry in self.apiIterator("/api/ACH_MarketingGroups", (('GroupName', alliancename), ('ID', id)) ):
-            print(f"Removing {entry["Identity"]["IdentityElements"]["$values"][0]} from {alliancename}")
+            foundid = entry["Identity"]["IdentityElements"]["$values"][0]
+            print(f"Removing {foundid} from {alliancename}")
             self.delete("/api/ACH_MarketingGroups", "~{0}".format("|".join(entry["Identity"]["IdentityElements"]["$values"])))
 
     def addToAlliance(self, id, alliancename):
@@ -87,4 +88,4 @@ class iMISAPI:
         obj["PrimaryParentIdentity"]["IdentityElements"]["$values"][0] = id
         genericProp(obj, "ID", id)
         genericProp(obj, "GroupName", alliancename)
-        self.post("%s/api/ACH_MarketingGroups" % API_URL, headers=HEADERS, json=obj)
+        self.post("/api/ACH_MarketingGroups", obj)
