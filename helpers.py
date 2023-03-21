@@ -16,3 +16,33 @@ def deleteGenericProp(pitem, pname, collection="Properties"):
         if prop["Name"] != pname:
             newprops.append(prop)
     pitem[collection]["$values"] = newprops
+
+
+ALLIANCE_BODY = {
+    "$type": "Asi.Soa.Core.DataContracts.GenericEntityData, Asi.Contracts",
+    "EntityTypeName": "ACH_MarketingGroups",
+    "PrimaryParentEntityTypeName": "Party",
+    "PrimaryParentIdentity": {
+        "$type": "Asi.Soa.Core.DataContracts.IdentityData, Asi.Contracts",
+        "EntityTypeName": "Party",
+        "IdentityElements": {
+            "$type": "System.Collections.ObjectModel.Collection`1[[System.String, mscorlib]], mscorlib",
+            "$values": [""]
+        }
+    },
+    "Properties": {
+        "$type": "Asi.Soa.Core.DataContracts.GenericPropertyDataCollection, Asi.Contracts",
+        "$values": [
+            {
+                "$type": "Asi.Soa.Core.DataContracts.GenericPropertyData, Asi.Contracts",
+                "Name": "ID",
+                "Value": ""
+            },
+            {
+                "$type": "Asi.Soa.Core.DataContracts.GenericPropertyData, Asi.Contracts",
+                "Name": "GroupName",
+                "Value": ""
+            }
+        ]
+    }
+}

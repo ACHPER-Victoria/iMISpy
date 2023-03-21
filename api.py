@@ -1,6 +1,7 @@
 from sys import stderr
 from collections import OrderedDict
-from .helpers import genericProp
+from .helpers import genericProp, ALLIANCE_BODY
+import json
 
 class APIException(Exception):
     def __init__(self, req, *args, **kwargs):
@@ -75,7 +76,14 @@ class iMISAPI:
         return list(self.apiIterator("/api/ACH_MarketingGroups", (('GroupName', alliancename),) ))
 
     def removeFromAlliance(self, id, alliancename):
-        for entry in self.apiIterator("/api/ACH_MarketingGroups", (('GroupName', alliancename),) ):
-            if genericProp(entry, "GroupName") == alliancename:
-                print(f"Removing {id} from {alliancename}")
-                self.delete("/api/ACH_MarketingGroups", "~{0}".format("|".join(entry["Identity"]["IdentityElements"]["$values"])))
+        for entry in self.apiIterator("/api/ACH_MarketingGroups", (('GroupName', alliancename), ('ID', id)) ):
+            print(f"Removing {entry["Identity"]["IdentityElements"]["$values"][0]} from {alliancename}")
+            self.delete("/api/ACH_MarketingGroups", "~{0}".format("|".join(entry["Identity"]["IdentityElements"]["$values"])))
+
+    def addToAlliance(self, id, alliancename):
+        id = str(id)
+        obj = json.loads(ALLIANCE_BODY)
+        obj["PrimaryParentIdentity"]["IdentityElements"]["$values"][0] = id
+        genericProp(obj, "ID", id)
+        genericProp(obj, "GroupName", alliancename)
+        self.post("%s/api/ACH_MarketingGroups" % API_URL, headers=HEADERS, json=obj)
