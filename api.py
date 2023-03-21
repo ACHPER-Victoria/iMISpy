@@ -1,5 +1,6 @@
 from sys import stderr
 from collections import OrderedDict
+from .helpers import genericProp
 
 class APIException(Exception):
     def __init__(self, req, *args, **kwargs):
@@ -74,7 +75,7 @@ class iMISAPI:
 
     def removeFromAlliance(self, id, alliancename):
         for entry in self.apiIterator("/api/ACH_MarketingGroups", (('GroupName', alliancename),) ):
-            if entry["GroupName"] == alliancename:
+            if genericProp(entry, "GroupName") == alliancename:
                 print(f"Removing {id} from {alliancename}")
                 print(self.delete("/api/ACH_MarketingGroups", "~%s".format("|".join(entry["Identity"]["IdentityElements"]["$values"]))))
                 exit()
