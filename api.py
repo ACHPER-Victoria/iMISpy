@@ -69,10 +69,10 @@ class iMISAPI:
         return r.json()
 
     def allianceList(self, alliancename):
-        return list(self.apiIterator("/api/ACH_MarketingGroups", ['GroupName', alliancename]))
+        return list(self.apiIterator("/api/ACH_MarketingGroups", [['GroupName', alliancename]]))
 
     def removeFromAlliance(self, id, alliancename):
-        for entry in self.apiIterator("/api/ACH_MarketingGroups", ['GroupName', alliancename]):
+        for entry in self.apiIterator("/api/ACH_MarketingGroups", [['GroupName', alliancename]]):
             if entry["GroupName"] == alliancename:
                 print(f"Removing {id} from {alliancename}")
                 print(self.delete("/api/ACH_MarketingGroups", "~%s".format("|".join(entry["Identity"]["IdentityElements"]["$values"]))))
