@@ -78,5 +78,5 @@ class iMISAPI:
         for entry in self.apiIterator("/api/ACH_MarketingGroups", (('GroupName', alliancename),) ):
             if genericProp(entry, "GroupName") == alliancename:
                 print(f"Removing {id} from {alliancename}")
-                print(self.delete("/api/ACH_MarketingGroups", "~%s".format("|".join(entry["Identity"]["IdentityElements"]["$values"]))))
+                print(self.delete("/api/ACH_MarketingGroups", "~%{0}".format("|".join(entry["Identity"]["IdentityElements"]["$values"]))))
                 exit()
