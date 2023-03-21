@@ -82,7 +82,8 @@ class iMISAPI:
 
     def addToAlliance(self, id, alliancename):
         id = str(id)
-        obj = json.loads(ALLIANCE_BODY)
+        obj = json.dumps(ALLIANCE_BODY)
+        obj = json.loads(obj)
         obj["PrimaryParentIdentity"]["IdentityElements"]["$values"][0] = id
         genericProp(obj, "ID", id)
         genericProp(obj, "GroupName", alliancename)
