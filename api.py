@@ -30,6 +30,7 @@ class iMISAPI:
         return r.json()
 
     def delete(self, endpoint, id=""):
+        print(f"DELETE {endpoint}/{id}")
         r = self.session.delete(f"{endpoint}/{id}")
         r.raise_for_status()
         return r
