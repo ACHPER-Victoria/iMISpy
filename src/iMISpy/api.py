@@ -38,9 +38,13 @@ class iMISAPI:
 
     def apiIterator(self, url, p):
         # BE CAREFUL WHEN ITERATING. Don't modify objects that could change the iteration results/ordering.
-        print(repr(p))
         p = list(p)
-        p.append(("limit","100"))
+        limitfound = False
+        for pi in p:
+            if pi[0] == "limit":
+                limitfound = True
+                break
+        if not limitfound: p.append(("limit","100"))
         r = self.session.get(f"{url}", params=p)
         if r.status_code != 200:
             raise APIException(r)

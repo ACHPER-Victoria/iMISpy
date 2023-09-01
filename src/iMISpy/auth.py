@@ -19,13 +19,12 @@ class iMISAuth(AuthBase):
 
     def token(self, regen=False):
         #no token or expired/about to expire: reauth
-        if regen or not self.token or time.time() >= self.expires:
+        if regen or not self.access_token or time.time() >= self.expires:
             r = self.session.post("/token", headers=AUTH_HEADER, data=AUTH_DATA)
             r.raise_for_status()
             token_data =  r.json()
             self.access_token = token_data["access_token"]
-            #token time is usually 2 weeks, subtract a few hours from that just to make sure we're refreshing in time.
-            self.expires = time.time()+token_data["expires_in"]-(60*60*3)
+            self.expires = time.time()+token_data["expires_in"]-10 # minute 10 seconds for margin...
         #return token string
         return "Bearer %s" % self.access_token
 
