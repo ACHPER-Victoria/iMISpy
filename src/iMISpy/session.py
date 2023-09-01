@@ -9,7 +9,7 @@ from .settings import SETTINGS
 retry_strategy = Retry(
     total=8,
     status_forcelist=[413, 418, 429, 500, 502, 503, 504],
-    method_whitelist=["HEAD", "GET", "PUT", "POST", "DELETE", "OPTIONS", "TRACE"],
+#    allowed_methods=["HEAD", "GET", "PUT", "POST", "DELETE", "OPTIONS", "TRACE"],
     backoff_factor=2
 )
 
