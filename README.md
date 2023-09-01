@@ -21,8 +21,10 @@ api = openAPI(json.load(open(join(home, ".iMIS.json"), "rb")))
 ```
 
 ## Remote (e.g. Azure Functions)
-Probably the most secure way to do this is to store the account details in a Azure Key Vault, then create environment variables that use the account details, then pass the environ to the init method.
+Probably the most secure way to do this is to store the account details in a Azure Key Vault, create environment variables that use the keyvault details, then pass the environ to the init method.
+Some pointers are here: https://learn.microsoft.com/en-us/azure/app-service/app-service-key-vault-references
 ```python
 from os import environ
+from iMISpy import openAPI
 api = openAPI(environ)
 ```
