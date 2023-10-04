@@ -15,18 +15,18 @@ class iMISAPI:
     def __init__(self, session):
         self.session = session
 
-    def get(self, endpoint, id):
-        r = self.session.get(f"{endpoint}/{id}")
+    def get(self, endpoint, id, **others):
+        r = self.session.get(f"{endpoint}/{id}", **others)
         r.raise_for_status()
         return r.json()
 
-    def put(self, endpoint, id, obj):
-        r = self.session.put(f"{endpoint}/{id}", json=obj)
+    def put(self, endpoint, id, obj, **others):
+        r = self.session.put(f"{endpoint}/{id}", json=obj, **others)
         r.raise_for_status()
         return r.json()
 
-    def post(self, endpoint, obj, id=""):
-        r = self.session.post(f"{endpoint}/{id}", json=obj)
+    def post(self, endpoint, obj, id="", **others):
+        r = self.session.post(f"{endpoint}/{id}", json=obj, **others)
         r.raise_for_status()
         return r.json()
 
