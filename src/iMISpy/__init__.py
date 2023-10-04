@@ -3,6 +3,6 @@ from .api import iMISAPI
 from . import helpers
 from .settings import init
 
-def openAPI(dictobj):
+def openAPI(dictobj, retryForceList=None):
     init(dictobj)
-    return iMISAPI(webinit())
+    return iMISAPI(webinit(retryForceList=retryForceList))
