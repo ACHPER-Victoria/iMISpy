@@ -34,7 +34,7 @@ class iMISAuth(AuthBase):
             req = res.request
             req.headers['Authorization'] = self.token(True)
             logging.debug(f'Resending request: {req.method} - {req.url}')
-            return session.send(res.request)
+            return self.session.send(res.request)
 
     def __call__(self, r):
         # modify and return the request only if not auth attempt.

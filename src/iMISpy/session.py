@@ -2,7 +2,7 @@ from requests import Session
 from urllib.parse import urljoin
 
 from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
+from requests.packages.urllib3.util.retry import Retry # type: ignore   # for some reason Pylance doesn't recognize this.
 from .auth import iMISAuth
 from .settings import SETTINGS
 
@@ -33,7 +33,7 @@ class LiveServerSession(Session):
 
 def webinit(retryForceList=None):
     web = LiveServerSession(prefix_url=SETTINGS["API_URL"])
-    retry_strategy = Retry(total=8, status_forcelist=[413, 418, 429, 500, 502, 503, 504], backoff_factor=2)
+    retry_strategy = Retry(total=8, status_forcelist=[413, 418, 429, 500, 502, 504], backoff_factor=2)
     if retryForceList:
         retry_strategy = Retry(total=8, status_forcelist=retryForceList, backoff_factor=2)
     adapter = TimeoutHTTPAdapter(timeout=10, max_retries=retry_strategy)
